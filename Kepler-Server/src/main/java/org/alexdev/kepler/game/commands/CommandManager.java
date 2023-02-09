@@ -51,6 +51,9 @@ public class CommandManager {
         this.commands.put(new String[] { "infobus", "bus" }, new InfobusCommand());
 		this.commands.put(new String[] { "givecredits" }, new GiveCreditsCommand());
 
+        //me
+        this.commands.put(new String[] { "giveitem" }, new GiveItemCommand());
+
         // Add client-side commands to list
         this.commands.put(new String[] { "chooser" }, new ChooserCommand());
         this.commands.put(new String[] { "furni" }, new FurniCommand());

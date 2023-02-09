@@ -164,6 +164,34 @@ public class ItemDao {
         return item;
     }
 
+    public static String getItemName(int itemId) {
+        String itemName = null;
+
+        Connection sqlConnection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            sqlConnection = Storage.getStorage().getConnection();
+            preparedStatement = Storage.getStorage().prepare("SELECT * FROM items_definitions WHERE id = ?", sqlConnection);
+            preparedStatement.setInt(1, itemId);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                itemName = resultSet.getString("name");
+            }
+
+        } catch (Exception e) {
+            Storage.logError(e);
+        } finally {
+            Storage.closeSilently(resultSet);
+            Storage.closeSilently(preparedStatement);
+            Storage.closeSilently(sqlConnection);
+        }
+
+        return itemName;
+    }
+
     /**
      * Get the room list of items.
      *
@@ -367,4 +395,5 @@ public class ItemDao {
                 resultSet.getDouble("z"), resultSet.getInt("rotation"), resultSet.getString("wall_position"),
                 resultSet.getString("custom_data"), resultSet.getBoolean("is_hidden"));
     }
+
 }
